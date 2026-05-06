@@ -8,6 +8,9 @@ coverage/
 dist/
 bundle.html
 
+# Dev utilities
+screenshots.js
+
 # Logs
 *.log
 npm-debug.log*
