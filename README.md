@@ -2,6 +2,20 @@
 
 A browser-based additive wave synthesizer built with the Web Audio API. No build step required — open `synth.html` directly in any modern browser.
 
+## Screenshots
+
+**Empty state — ready to add oscillators**
+![Empty state](screenshots/01-empty.png)
+
+**Four oscillators with distinct colors — waveform view**
+![Oscillators with waveform display](screenshots/02-oscillators.png)
+
+**Spectrum view (requires audio playback)**
+![Spectrum display](screenshots/03-spectrum.png)
+
+**Full view with oscillators and preset panel**
+![Full view with presets](screenshots/04-presets.png)
+
 ## Features
 
 - **Three wave types** — sine, square, and sawtooth oscillators
