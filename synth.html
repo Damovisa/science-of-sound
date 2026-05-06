@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wave Synthesizer</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+      const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="synth.css" />
+</head>
+<body>
+<div class="app">
+  <div class="sticky-bar">
+    <h1>🎛️ Wave Synthesizer</h1>
+    <span class="tagline">Web Audio API</span>
+    <div class="sticky-actions">
+      <button id="playBtn" class="btn-primary" disabled>▶ Play</button>
+      <div class="playing-indicator" id="indicator"></div>
+      <span class="osc-count" id="oscCountLabel"></span>
+      <button class="btn-ghost" id="unmuteAllBtn">Unmute All</button>
+      <button class="btn-danger" id="resetBtn">Reset All</button>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- ═══ LEFT: Controls ═══ -->
+    <div class="left-panel">
+
+      <!-- Oscillators -->
+      <div class="card">
+        <div class="card-title">Oscillators</div>
+        <div class="add-form">
+          <div class="add-group">
+            <label>Wave</label>
+            <select id="addWave">
+              <option value="sine">Sine</option>
+              <option value="square">Square</option>
+              <option value="sawtooth">Saw</option>
+            </select>
+          </div>
+          <div class="add-group">
+            <label>Note</label>
+            <select id="addNote" style="min-width:92px"></select>
+          </div>
+          <div class="add-divider">or</div>
+          <div class="add-group">
+            <label>Custom Hz</label>
+            <input type="number" id="customFreqInput" value="440" min="20" max="8000" step="1" />
+          </div>
+          <div class="add-group" style="justify-content:flex-end">
+            <label style="visibility:hidden">x</label>
+            <button class="btn-primary" id="addOscBtn">+ Add</button>
+          </div>
+          <div class="add-break"></div>
+          <div class="add-group">
+            <label>Instrument</label>
+            <select id="addInstrument">
+              <option value="piano">Piano</option>
+              <option value="violin">Violin</option>
+              <option value="guitar">Guitar</option>
+              <option value="clarinet">Clarinet</option>
+              <option value="flute">Flute</option>
+              <option value="trumpet">Trumpet</option>
+              <option value="oboe">Oboe</option>
+              <option value="cello">Cello</option>
+            </select>
+          </div>
+          <div class="add-group" style="justify-content:flex-end">
+            <label style="visibility:hidden">x</label>
+            <button class="btn-ghost" id="addWithHarmonicsBtn">+ Add with harmonics</button>
+          </div>
+        </div>
+        <div id="oscList">
+          <div class="empty-state">No oscillators yet — add one above.</div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div class="card">
+        <div class="card-title">Presets</div>
+        <div class="preset-save-row">
+          <input type="text" id="presetNameInput" placeholder="Preset name…" maxlength="40" />
+          <button class="btn-success" id="savePresetBtn">Save</button>
+        </div>
+        <div id="presetList"></div>
+      </div>
+
+    </div><!-- /left-panel -->
+
+    <!-- ═══ RIGHT: Visual Display ═══ -->
+    <div class="right-panel">
+      <div class="card">
+        <div class="card-title">Visual Display</div>
+
+        <!-- View mode toggle -->
+        <div class="viz-tabs">
+          <button class="viz-tab active" data-mode="waveform">Waveform</button>
+          <button class="viz-tab" data-mode="spectrum">Spectrum</button>
+        </div>
+
+        <!-- Master output canvas -->
+        <canvas id="masterCanvas"></canvas>
+
+        <!-- Per-oscillator waveform strips -->
+        <div class="card-title" style="margin-top:2px">Oscillators</div>
+        <div id="oscVizList">
+          <div class="no-osc-viz">Add oscillators to see their waveforms.</div>
+        </div>
+      </div>
+    </div><!-- /right-panel -->
+
+  </div><!-- /layout -->
+</div><!-- /app -->
+
+<script src="synth-core.js"></script>
+<script src="synth.js"></script>
+</body>
+</html>
